@@ -3,35 +3,37 @@ const proxyUrl ='https://cors-anywhere.herokuapp.com/';
 const mainUrl = `${proxyUrl}${baseUrl}`
 console.log(mainUrl)
 let cryptoData = []
-
 let resPerPage = 10;
-let currPage
+let currPage = 1;
+
+const dataBody =  document.querySelector('#data-tbody');
 
 
-async function renderData(){
+async function renderData() {
     await getData()
 
-    //Create Table data in HTML
-    const cryptoCurr = ''
-    console.log(cryptoData)
+    //Create HTML
+
+    let coinData = ''
 
     cryptoData.filter((row,idx)=> {
-        let start = (currPage -1) * resPerPage
-        let end = currPage * resPerPage
-
+        let start = (currPage -1) * resPerPage;
+        let end = currPage * resPerPage;
         if(idx >= start && idx < end) return true;
-    }).forEach(coin =>{
-        cryptoData += "<tr>"
-        cryptoData += `<td>${parseFloat(coin.btcPrice.toFixed(5))}</td>`
-        cryptoData += `<td>${(coin.rank)}</td>`
-        cryptoData += `<td>${(coin.tier)}</td>`
-        cryptoData += `<td>${(coin.name)}</td>`
-        cryptoData += `<td>${(coin.symbol)}</td>`
-        cryptoData += `<td>${Math.round(coin.price)}</td>`
+    }).forEach(coin => {
+        coinData += "<tr>";
+        coinData += `<td>${parseFloat(coin.btcPrice).toFixed(5)}</td>`;
+        coinData += `<td>${(coin.rank)}</td>`;
+        coinData += `<td>${(coin.tier)}</td>`;
+        coinData += `<td>${(coin.name)}</td>`;
+        coinData += `<td>${(coin.symbol)}</td>`;
+        coinData += `<td>${Math.round(coin.price)}</td>`;
         "<tr>"
-    })
+        console.log(coinData)
 
-    document.querySelector('#data-tbody').innerHTML = cryptoData
+    });
+
+    dataBody.innerHTML = coinData;
 }
 renderData()
 
